@@ -1,8 +1,7 @@
-# TRaiCE Global Offline
+#Global API
 
-Repository for TRaiCE Global Offline
+Repository for Global API
 
 RUN pip install -r requirements.txt
 
 Run: uvicorn app.main:app --reload# backend-global
-# backend-global
