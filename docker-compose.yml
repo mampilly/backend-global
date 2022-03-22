@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  nginx-sidecar:
+    build:
+      context: ./nginx-sidecar
+
+    ports:
+      - "443:443"
+
+    networks:
+      - traice-net
+
+    environment:
+      - API_HOST=global-api
+      - API_PORT=8000
+
+  global-api:
+    build:
+      context: .
+
+    networks:
+      - traice-net
+
+networks:
+  traice-net:
