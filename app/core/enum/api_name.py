@@ -3,4 +3,4 @@
 
 class APINAME:
     """API Name Enum"""
-    api_name = "TRaiCE API"
+    api_name = "API"

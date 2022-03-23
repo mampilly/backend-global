@@ -14,6 +14,7 @@ from app.routes.businesses.controller.business_metrics import business_metric_co
 from app.routes.businesses.controller.business_trends import business_trends_controller
 from app.routes.businesses.controller.business import business_controller
 from app.routes.businesses.controller.alerts import alerts_controller
+from app.routes.socialmedia.controllers import social_media_controller
 from app.core.config import config
 
 app = FastAPI(docs_url=None, redoc_url=None)
@@ -26,12 +27,12 @@ def custom_openapi():
     openapi_schema = get_openapi(
         title=APINAME.api_name,
         version="3.0.2",
-        description="This is an API that give access to TRaiCE API's",
+        description="This is an API that give access to API's",
         routes=app.routes,
     )
-    openapi_schema["info"]["x-logo"] = {
-        "url": "https://app.traice.io/assets/logos/logo.png"
-    }
+    # openapi_schema["info"]["x-logo"] = {
+    #     "url": "https://app.traice.io/assets/logos/logo.png"
+    # }
     app.openapi_schema = openapi_schema
     return app.openapi_schema
 
@@ -50,13 +51,13 @@ app.openapi = custom_openapi
 def overridden_swagger():
     """Swagger endpoint
     """
-    return get_swagger_ui_html(openapi_url="/openapi.json", title=APINAME.api_name, swagger_favicon_url="https://app.traice.io/favicon.ico")
+    return get_swagger_ui_html(openapi_url="/openapi.json", title=APINAME.api_name)
 
 
 @app.get("/documentation", include_in_schema=False)
 def overridden_redoc():
     """Api documentation end point"""
-    return get_redoc_html(openapi_url="/openapi.json", title=APINAME.api_name, redoc_favicon_url="https://app.traice.io/favicon.ico")
+    return get_redoc_html(openapi_url="/openapi.json", title=APINAME.api_name)
 
 
 app.add_middleware(
@@ -74,6 +75,7 @@ app.include_router(business_controller.router)
 app.include_router(business_metric_controller.router)
 app.include_router(business_trends_controller.router)
 app.include_router(alerts_controller.router)
+app.include_router(social_media_controller.router)
 
 
 def use_route_names_as_operation_ids(application: FastAPI) -> None:
